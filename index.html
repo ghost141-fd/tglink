@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Подготовка контента...</title>
+    <title>Переход в PS_traff | Telegram</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { 
+        body {
             font-family: Arial, sans-serif;
             background: #000;
             color: #fff;
             text-align: center;
             padding: 20px;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .loader {
             border: 5px solid #333;
@@ -18,35 +23,71 @@
             width: 50px;
             height: 50px;
             animation: spin 1s linear infinite;
-            margin: 30px auto;
+            margin: 20px auto;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .btn {
+            display: inline-block;
+            background: #25F4EE;
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <h2>Идет перенаправление...</h2>
+    <h2>Добро пожаловать в PS_traff!</h2>
     <div class="loader"></div>
-    <p id="status">Пожалуйста, подождите</p>
+    <p id="status">Подготовка контента...</p>
+    <a href="https://t.me/PS_traff" id="telegram-btn" class="btn">Открыть в Telegram</a>
 
     <script>
-        // Проверяем, открыто ли в TikTok
-        if (navigator.userAgent.includes('TikTok')) {
-            document.getElementById('status').innerHTML = 
-                'Для доступа к контенту:<br>' +
-                '1. Нажмите "•••" → "Открыть в браузере"<br>' +
-                '2. Дождитесь автоматического перехода';
-            
-            // Пытаемся открыть второй сайт
-            setTimeout(() => {
-                window.location.href = 'https://tg-redirector.vercel.app/?to=PS_traff';
-            }, 3000);
-        } else {
-            // Если не TikTok, сразу в Telegram
-            window.location.href = 'https://t.me/PS_traff';
+        // Настройки
+        const channel = "PS_traff"; // Ваш канал (без @)
+        const isTikTok = navigator.userAgent.includes('TikTok');
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        // Функция редиректа
+        function redirectToTelegram() {
+            if (isMobile) {
+                // Пытаемся открыть в приложении Telegram
+                window.location.href = tg://resolve?domain=${channel};
+                
+                // Если не получилось, через 0.5 сек открываем в браузере
+                setTimeout(() => {
+                    window.location.href = https://t.me/${channel};
+                }, 500);
+            } else {
+                // Для ПК сразу веб-версия
+                window.location.href = https://t.me/${channel};
+            }
         }
+
+        // Для TikTok показываем кнопку и инструкции
+        if (isTikTok) {
+            document.getElementById('status').innerHTML = `
+                TikTok блокирует автоматический переход.<br>
+                Шаги:<br>
+                1. Нажмите "•••" в правом углу<br>
+                2. Выберите "Открыть в браузере"<br>
+                3. Нажмите кнопку ниже
+            `;
+        } else {
+            // Для других платформ — авторедирект через 3 сек
+            setTimeout(redirectToTelegram, 3000);
+        }
+
+        // Ручной редирект по кнопке
+        document.getElementById('telegram-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            redirectToTelegram();
+        });
     </script>
 </body>
 </html>
