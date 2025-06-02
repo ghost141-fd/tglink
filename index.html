@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Подготовка контента...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .loader {
+            border: 5px solid #333;
+            border-top: 5px solid #25F4EE;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h2>Идет перенаправление...</h2>
+    <div class="loader"></div>
+    <p id="status">Пожалуйста, подождите</p>
+
+    <script>
+        // Проверяем, открыто ли в TikTok
+        if (navigator.userAgent.includes('TikTok')) {
+            document.getElementById('status').innerHTML = 
+                'Для доступа к контенту:<br>' +
+                '1. Нажмите "•••" → "Открыть в браузере"<br>' +
+                '2. Дождитесь автоматического перехода';
+            
+            // Пытаемся открыть второй сайт
+            setTimeout(() => {
+                window.location.href = 'https://tg-redirector.vercel.app/?to=PS_traff';
+            }, 3000);
+        } else {
+            // Если не TikTok, сразу в Telegram
+            window.location.href = 'https://t.me/PS_traff';
+        }
+    </script>
+</body>
+</html>
